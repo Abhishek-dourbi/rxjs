@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2021 by Abhishek-dourbi (http://jsbin.com/rudexof/4/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style id="jsbin-css">
+div {
+  display: flex;
+}
+</style>
+</head>
+<body>
+  <script src="https://unpkg.com/@reactivex/rxjs@6.6.3/dist/global/rxjs.umd.js"></script>
+  <div>
+    <ul id="elContainer1"></ul>
+    <ul id="elContainer2"></ul>
+  </div>
+  <p id="elText"></p>
+<script id="jsbin-javascript">
+const {
+  Observable
+} = rxjs;
+
+
+// Manual Timer
+
+const obs1 = Observable.create(observer => {
+  setTimeout(() => {
+    observer.next('John')
+  }, 2000)
+  setTimeout(() => {
+    observer.next('Don')
+  }, 4000)
+  setTimeout(() => {
+    observer.next('Adams')
+//     observer.error(new Error('Error'));
+  }, 6000)
+  setTimeout(() => {
+    observer.next('Rice')
+    observer.complete();
+  }, 8000)
+})
+
+obs1.subscribe(res => {
+  const ele = document.createElement('li');
+  ele.innerText = res;
+  document.getElementById('elContainer1').appendChild(ele);
+}, (res) => {
+  console.log('Error');
+}, () => {
+  console.log('Completed');
+})
+// subscribe(data, error, completion)
+
+
+// Custom Interval
+
+let count1 = 0;
+let sub1;
+const names = ['John', 'Don', 'Adams', 'Son'];
+const obs2 = Observable.create(observer => {
+  setInterval(() => {
+    observer.next(names[count1]);
+    
+    if(count === names.length - 1) {
+      observer.complete();
+    }
+    count1++;
+  }, 1000)
+})
+
+
+sub1 = obs2.subscribe(res => {
+  const ele = document.createElement('li');
+  ele.innerText = res;
+  document.getElementById('elContainer2').appendChild(ele);
+})
+
+
+// Random Interval
+
+
+// let count2 = 0;
+// const names1 = ['John', 'Don', 'Adams', 'Son'];
+// const obs3 = Observable.create(observer => {
+//   setInterval(() => {
+//     observer.next(names1[count2]);
+    
+//     if(count === names1.length - 1) {
+//       observer.complete();
+//     }
+//     count2++;
+//   }, 1000)
+// })
+
+// obs3.subscribe(res => {
+//   document.getElementById('elText').innerText = res;
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
